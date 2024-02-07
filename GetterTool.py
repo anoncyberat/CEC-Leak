@@ -6,7 +6,7 @@ DOWNLOADS = "Downloads"
 CEC = "https://data.cyber.org.il/"
 ROOT = "root:\\"
 COMMANDS = ["ls   - list of local dir.", 
-            "cd   - enter into another folder.", 
+            "cd   - enter into another folder, format 'cd {folder name}' or 'cd {folder index}' - example 'cd folder' or 'cd 5", 
             "get  - Download file from the server, format 'get {index}' - example: 'get 15'.", 
             "link - print the link to the file on the server, format 'link {index}' - example 'link 12'.", 
             "help - list of all exists commands.", 
@@ -32,6 +32,9 @@ def main():
                     i += 1
             case "cd":                
                 if len(command) == 2:
+                    if command[1].isdecimal():
+                        curr_folder.append(VisualArgs.getFolderByID(int(command[1]), folders)[2])
+                        folders = ParserHelper.dirCurrFolders(curr_folder, Contents)
                     if command[1] == "..":
                         if len(curr_folder):
                             curr_folder.pop()
